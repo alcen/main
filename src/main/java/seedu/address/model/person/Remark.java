@@ -12,6 +12,15 @@ public class Remark {
         this.value = rem;
     }
 
+    /**
+     * Checks whether this Remark is empty
+     *
+     * @return True, if the Remark is empty
+     */
+    public boolean isBlank() {
+        return this.value.isBlank();
+    }
+
     @Override
     public String toString() {
         return value;

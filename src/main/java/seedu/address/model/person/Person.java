@@ -128,6 +128,10 @@ public class Person {
                 .append(getAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        if (!getRemark().isBlank()) {
+            builder.append(" Remark: ")
+                    .append(getRemark());
+        }
         return builder.toString();
     }
 

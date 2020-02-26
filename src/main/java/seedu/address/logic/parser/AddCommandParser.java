@@ -42,7 +42,14 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        Remark remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK).get());
+        // allow Remark to be an optional field
+        Remark remark;
+        if (!arePrefixesPresent(argMultimap, PREFIX_REMARK)) {
+            // give this person an empty String as the Remark
+            remark = new Remark("");
+        } else {
+            remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK).get());
+        }
 
         Person person = new Person(name, phone, email, address, tagList, remark);
 
