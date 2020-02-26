@@ -161,7 +161,7 @@ Your code should look something like link:https://github.com/nus-cs2103-AY1920S1
 Now let's move on to writing a parser that will extract the index and remark from the input provided by the user.
 
 Create a `RemarkCommandParser` class in the `seedu.address.logic.parser` package.
-The class must extend the `Parser` interface.
+The class must implement the `Parser` interface.
 
 .The relationship between Parser and RemarkCommandParser
 image::ParserInterface.png[]
