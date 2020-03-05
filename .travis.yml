@@ -10,6 +10,8 @@ script: >-
 deploy:
   skip_cleanup: true
   provider: script
+  github_token: $GITHUB_TOKEN
+  keep_history: true
   script: ./config/travis/deploy_github_pages.sh
   on:
     branch: master
