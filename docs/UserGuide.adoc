@@ -1,4 +1,4 @@
-= AddressBook Level 3 - User Guide
+= Coupon Stash v1.0 - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -12,33 +12,79 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level3
+:repoURL: https://github.com/AY1920S2-CS2103T-F09-1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+[[section]]
+image:Stash.png[image,width=322,height=322]
+
+
+By: Team F09-1
+
+[cols=",",options="header",]
+|=========================================
+|*Contents* |*Section Number*
+a|
+*Introduction*
+
+ |1
+a|
+*Quick Start*
+
+ |2
+a|
+
+*Features*
+
+   1.  Viewing help: help
+   2.  Adding a coupon: add
+   3.  Listing all coupons: list
+   4.  Editing a coupon: edit
+   5.  Locating coupons by name: find
+   6.  Deleting a coupon: delete
+   7. Clearing all entries: clear
+   8. Exiting the program: exit
+   9. Saving the data
+   10. Marking a coupon as used: used
+   11. Listing all expiring coupons: expiring
+   12. Shows reminders: remind
+   13. Viewing savings: saved
+   14. Undo the previous command: undo/redo
+
+ |3
+
+a|
+*FAQ*
+
+ |4
+a|
+*Command Summary*
+
+ |5
+a|
+*Appendix*
+
+ |6
+|=========================================
 
 == Introduction
 
-AddressBook Level 3 (AB3) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB3 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Coupon Stash is for SoC students and staff who rightfully *prefer to use a desktop app for managing coupons*. More importantly, CS is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CS can get your coupon management tasks done faster than traditional GUI apps. Interested? You should be!!!! Jump to the Section 2, “Quick Start” to get started. Enjoy!
 
 == Quick Start
 
-.  Ensure you have Java `11` or above installed in your Computer.
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Ensure you have Java (recommended: version 11 or above) installed in your Computer.
+.  Download the latest CouponStash.jar.
+.  Copy the file to the folder you want to use as the home folder for your Coupon Stash.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
-+
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+.  Type the command in the command box and press Enter to execute it. +
+e.g. typing *help* and pressing Enter will open the help window.
 .  Some example commands you can try:
+* *list* : lists all coupons
+* *add:* add n/Techno Western d/20% off s/2/3/2020: adds a coupon named Techno Western to the Coupon Stash.
+* *delete*: delete 3 : deletes the 3rd coupon shown in the current list
+* *exit* : exits the app (your data will be saved automatically)
+.  Refer to Section 3, “Features” for details of each command.
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
-
-.  Refer to <<Features>> for details of each command.
 
 [[Features]]
 == Features
@@ -46,132 +92,362 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in UPPER_CASE are the parameters to be supplied by the user e.g. in add n/NAME, NAME is a parameter which can be used as add n/The Deck Chicken Rice.
+* Items in square brackets are optional e.g n/NAME [t/TAG] can be used as n/The Deck Chicken Rice t/value or as n/The Deck Chicken Rice.
+* Items with …​ after them can be used multiple times including zero times e.g. [t/TAG]…​ can be used as (i.e. 0 times), t/value, t/friend t/value etc.
+* Parameters can be in any order e.g. if the command specifies n/NAME, d/DETAILS, d/DETAILS n/NAME is also acceptable.
+* Dates are all in the DD/MM/YYYY format. (CouponStash-Date format)
+** D((Optional<Character>) D)-M((Optional<Character>) M)-YYYY
 ====
 
-=== Viewing help : `help`
+=== Viewing help: `help`
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a coupon: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a coupon to your coupon stash
+
+Format: add n/name d/DETAILS s/START DATE [e/EXPIRY DATE] [t/TAG]…​
 
 [TIP]
-A person can have any number of tags (including 0)
+A coupon can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/The Deck Chicken Rice d/20% off s/5/5/2020 e/ 6/5/2020 t/value`
+* `add n/Preenz Gjorjes Pak Mala d/10% off s/2/3/2020 t/value t/friends`
 
-=== Listing all persons : `list`
+=== Listing all coupons: `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all coupons in the coupon stash.
+
 Format: `list`
 
-=== Editing a person : `edit`
+=== Editing a coupon: `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits an existing coupon in the coupon book.
+
+Format: `edit INDEX [n/NAME] [d/DETAILS] [s/START DATE] [e/EXPIRY]
+[t/TAG]`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the coupon at the specified INDEX. The index refers to the index
+number shown in the displayed coupon list. The index *must be a positive
+integer* 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the coupon will be removed i.e
+adding of tags is not cumulative.
+* You can remove all the coupon’s tags by typing t/ without specifying
+any tags after it.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 d/50% off` +
+Edits the details of the 1st coupon to be 50% off
+* `edit 2 n/The Deck Nasi Ayam Hainan t/` +
+Edits the name of the 2nd coupon to be The Deck Nasi Ayam Hainan and
+clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating coupons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Find coupon(s) whose names contain any of the given keywords.
+
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g mALa will match Mala
+* The order of the keywords does not matter. e.g. Rice Chicken will
+match Chicken Rice
+* Language does not matter e.g. Nasi to Rice
+* Only full words will be matched e.g. Chicken will not match Chickens
+* Coupons matching at least one keyword will be returned (i.e. OR
+search). e.g. Chicken Rice will return Duck Rice, Chicken Chop
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find chicken` +
+Returns Chicken Rice, Ayam Penyet and Chicken Up
+* `find chicken chinese western` +
+Returns any coupon having names chicken, ayam, 鸡, pollo, Hähnchen,
+chinese or western
 
 // tag::delete[]
-=== Deleting a person : `delete`
+=== Deleting a coupon: `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified coupon from the coupon stash.
+
+Todo: confirmation (maybe for not expired)
+
+Todo: recycle bin
+
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index *must be a positive integer* 1, 2, 3, ...
+* Deletes the coupon at the specified INDEX.
+* The index refers to the index number shown in the displayed coupon
+list.
+* The index *must be a positive integer* 1, 2, 3, …​
 ****
 
 Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
+Deletes the 2nd coupon in the coupon stash.
+* `find rice` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st coupon in the results of the find command.
 
 // end::delete[]
-=== Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+=== Listing all expiring coupons: `expiring`
+
+Lists all your expiring coupons.
+
+Format: expiring DATE
+
+* Lists all coupons that are expiring before the specified DATE
+* The date must be in CouponStash-Date format
+* The date must be a future date
+
+Examples:
+
+* `expiring 2-3-2020` +
+Shows you all the coupons that will expire before 2 March 2020.
+
+
+=== Clearing all entries: `clear`
+
+Clears all entries from the coupon stash. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+=== Exiting the program: `exit`
 
 Exits the program. +
 Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Coupon stash data is saved in the hard disk automatically after any
+command that changes the data.
+
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Adding a reminder: `remind`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Adds a reminder to remind yourself to use a coupon +
+Format: +
+`remind INDEX /e (period before expiry)` +
+or +
+`remind INDEX /d  (specific date to remind)`
+
+****
+* Reminds you about the coupon at the specified INDEX.
+* The index refers to the index number shown in the displayed coupon list.
+* The index must be a positive integer 1, 2, 3, …​
+* /e - to indicate the period before the coupon’s expiry date
+* /d - to indicate the specific date to remind
+
+****
+Examples:
+
+* `remind 1 /p 5 days` +
+Reminds you about the 1st coupon, 5 days before it expires.
+Reminders will be displayed as a pop up when you launch the app.
+
+
+* `remind 5 /d 2020-05-01` +
+Reminds you about the 5th  coupon on 1 May 2020.
+Reminders will be displayed as a pop up when you launch the app.
+
+=== Viewing savings: `saved`
+
+Shows you all your savings from using the coupons, from
+a specified date. +
+Format: +
+`saved /d (date to track from)`
+
+****
+* Shows you a numeric value (e.g. 12.00 to represent
+twelve dollars/euros/pounds/pesos) that represents how much
+you saved since a certain date
+* This value changes depending on which coupons were marked
+as used during that period
+****
+Examples:
+
+* `saved /d 2020-03-01` +
+A message will be displayed: You have saved 0.10 since 1st March, 2020
+
+
+* `saved /d 2019-05-01` +
+A message will be displayed: You have saved 2.10 since 1st May, 2019
+
+=== Undo the previous command: `undo`
+Undo previous operation. Has no effect if there is no previous operation.
+
+Examples:
+
+* `remind 1 /p 5 days` +
+  `undo` +
+Undo the `remind` command. Reminder is removed.
+
+
+* `edit 1 d/50% off` +
+  `undo` +
+Revert the edit that was performed. Has no effect if nothing was undone before.
+
+=== Redo the undone command: `redo`
+Redo the previously undone command.
+
+Examples:
+
+* `remind 1 /p 5 days` +
+  `undo` +
+  `redo` +
+Un-undo the `remind` command.
+
+
+* `edit 1 d/50% off` +
+  `undo` +
+  `redo`
+Un-undo the `redit` command.
+
+Examples:
+
+* `remind 1 /p 5 days` +
+  `undo` +
+Undo the `remind` command. Reminder is removed.
+
+
+* `edit 1 d/50% off` +
+  `undo` +
+Revert the edit that was performed. Has no effect if nothing was undone before.
+
+=== Redo the undone command: `redo`
+Redo the previously undone command.
+
+Examples:
+
+* `remind 1 /p 5 days` +
+  `undo` +
+  `redo` +
+Un-undo the `remind` command.
+
+
+* `edit 1 d/50% off` +
+  `undo` +
+  `redo`
+Un-undo the `redit` command.
 
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+*Q*: How do I transfer my data to another computer?
+
+*A*: Simply install Stash in the other computer and overwrite the empty data file with your intended data file. +
+{empty} +
+
+*Q*: Can I add multiple coupons using a command line?
+
+*A:* Yes, you can. Use the ``Add'' command and type in all your coupons
+in this format, +
+add n/Co-op d/25% off on all stationeries s/25/2/2020 t/value
+t/stationaries +
+n/PGP Mala d/10% off s/2/3/2020 t/value t/friends +
+n/Universal Studios theme part d/ 50% off for all students s/2/5/2020
+e/1/1/2021 t/value +
+{empty} +
+
+*Q* : Why do I need to tag my coupons?
+
+*A* : Tagging is not compulsory. However, it allows you to group similar
+coupons together for easier execution. For example, you can easily
+delete all the coupons that are tagged, cheap. Do refer to section 4
+for more detail. +
+{empty} +
+
+*Q* : How do I store coupons with no ending date?
+
+*A* : Sorry, at the moment, coupon entries with no ending date cannot be
+stored. You would need to enter a much further date like 01/01/2030. To
+be added in version 2.0.0 +
+{empty} +
+
+*Q* : How do you calculate the savings value?
+
+*A* :  Whenever a coupon is marked as done, Stash will automatically
+calculate the values saved based on the details of the coupon.
+{empty} +
+
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
+* *Add:* `add n/NAME d/DETAILS s/START DATE [e/EXPIRY] [t/TAG]…`​ +
+e.g. `add n/The Deck Chicken Rice d/20% off s/2/3/2020 t/friend t/value`
+* *Clear*: `clear`
+* *Delete*: `delete INDEX` +
+e.g. `delete 3`
+* *Edit*: `edit INDEX [n/NAME] [d/DETAILS] [s/START DATE] [e/EXPIRY]
+[t/TAG]…`​ +
+e.g. `edit 2 n/Chicken Up d/50% off`
+* *Find*: `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `find western chick`
+* *List*: `list`
+* *Used*:
+* *Expiring*:
+* *Remind*:
+* *Saved*:
+* *Help*: help
+* *Undo*:
+* *Redo*:
+
+== Appendix
+
+=== *Query expressions (coming in v2.0)*
+
+Query expressions serve to enable users to perform efficient batch
+operations on stored coupons using SQL-like syntax.
+
+Examples:
+
+* `edit favorites set tag=hated where expiry < 19/2/2020` +
+For all coupons tagged as ``favorites'', set their tag to ``hated'' if
+they expire before the 19th Feb 2020.
+
+* `delete favorites where expiry < 19/2/2020` +
+For all coupons tagged as ``favorites'', delete them if they expire
+before the 19th Feb 2020.
+
+
+==== *Bulk edit*
+
+Format: `edit _tag_ set _field1=value1, field2=value2, …_ [where
+condition]`
+
+* The `edit` keyword is compulsory.
+** If selecting all tags, put tag as `*`.
+* The `set` keyword is compulsory.
+** If the field is present in a coupon, update the value, else create
+the field and value.
+** At least 1 field must be updated/added per edit operation.
+* The `where` keyword is optional.
+** The `==`, `>=`, `<=`, `>`, `<`, `!=`, operators are
+supported in the condition.
+** Only default fields can be compared.
+** Condition syntax: `DEFAULT_FIELD _operator_ LITERAL_VALUE`
+** `AND`/`OR` functionality is not available.
+
+==== *Bulk delete*
+
+Format: `delete _tag_ [where condition]`
+
+* The `delet`e keyword is compulsory.
+** If selecting all tags, put tag as ``*''.
+* The `where` keyword is optional.
+** If the `where` keyword is omitted, deletes all coupons with that tag.
+** Follows syntax explained above.

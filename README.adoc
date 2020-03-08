@@ -1,4 +1,4 @@
-= Address Book (Level 3)
+= Coupon Stash
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/AY1920S2-CS2103T-F09-1/main[image:https://travis-ci.org/AY1920S2-CS2103T-F09-1/main.svg?branch=master[Build Status]]
@@ -15,9 +15,12 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
+Welcome to Coupon Stash! Coupon Stash not only stores your coupons, but also
+keeps track of your savings, as well as provides you with a calendar so you can
+easily know which coupons are expiring. This application will revolutionise the
+way you look at coupons, savings, and life events.
+
+Save your life with Coupon Stash.
 
 == Site Map
 
@@ -29,8 +32,7 @@ endif::[]
 
 == Acknowledgements
 
-* Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
-_Marco Jakob_.
+* Coupon Stash is only made possible due to SE-EDU's Address Book application (https://se-education.org)
 * Libraries used: https://openjfx.io/[JavaFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/junit-team/junit5[JUnit5]
 
 == Licence : link:LICENSE[MIT]

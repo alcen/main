@@ -1,4 +1,4 @@
-= AddressBook Level 3 - Developer Guide
+= Coupon Stash - Developer Guide v1.0
 :site-section: DeveloperGuide
 :toc:
 :toc-title:
@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level3/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: Team F09-1
 
 == Setting up
 
@@ -28,13 +28,15 @@ Refer to the guide <<SettingUp#, here>>.
 .Architecture Diagram
 image::ArchitectureDiagram.png[]
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The *_Architecture Diagram_* given above explains the high-level design of the App.
+Given below is a quick overview of each component.
 
 [TIP]
 The `.puml` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder.
 Refer to the <<UsingPlantUml#, Using PlantUML guide>> to learn how to create and edit diagrams.
 
-`Main` has two classes called link:{repoURL}/src/main/java/seedu/address/Main.java[`Main`] and link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has two classes called link:{repoURL}/src/main/java/seedu/address/Main.java[`Main`] and link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`].
+It is responsible for,
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
@@ -79,9 +81,12 @@ image::UiClassDiagram.png[]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc.
+All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework.
+The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder.
+For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
@@ -98,11 +103,11 @@ image::LogicClassDiagram.png[]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person).
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
-.  In addition, the `CommandResult` object can also instruct the `Ui` to perform certain actions, such as displaying help to the user.
+. `Logic` uses the `AddressBookParser` class to parse the user command.
+. This results in a `Command` object which is executed by the `LogicManager`.
+. The command execution can affect the `Model` (e.g. adding a person).
+. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+. In addition, the `CommandResult` object can also instruct the `Ui` to perform certain actions, such as displaying help to the user.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
@@ -127,7 +132,9 @@ The `Model`,
 * does not depend on any of the other three components.
 
 [NOTE]
-As a more OOP model, we can store a `Tag` list in `Address Book`, which `Person` can reference. This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object. An example of how such a model may look like is given below. +
+As a more OOP model, we can store a `Tag` list in `Address Book`, which `Person` can reference.
+This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object.
+An example of how such a model may look like is given below. +
  +
 image:BetterModelClassDiagram.png[]
 
@@ -155,6 +162,7 @@ This section describes some noteworthy details on how certain features are imple
 
 // tag::undoredo[]
 === [Proposed] Undo/Redo feature
+
 ==== Proposed Implementation
 
 The undo/redo mechanism is facilitated by `VersionedAddressBook`.
@@ -169,27 +177,33 @@ These operations are exposed in the `Model` interface as `Model#commitAddressBoo
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+Step 1. The user launches the application for the first time.
+The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
 
 image::UndoRedoState0.png[]
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th person in the address book.
+The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 image::UndoRedoState1.png[]
 
-Step 3. The user executes `add n/David ...` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David ...` to add a new person.
+The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 image::UndoRedoState2.png[]
 
 [NOTE]
 If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command.
+The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
 image::UndoRedoState3.png[]
 
 [NOTE]
-If the `currentStatePointer` is at index 0, pointing to the initial address book state, then there are no previous address book states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
+If the `currentStatePointer` is at index 0, pointing to the initial address book state, then there are no previous address book states to restore.
+The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case.
+If so, it will return an error to the user rather than attempting to perform the undo.
 
 The following sequence diagram shows how the undo operation works:
 
@@ -200,13 +214,20 @@ NOTE: The lifeline for `UndoCommand` should end at the destroy marker (X) but du
 The `redo` command does the opposite -- it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
 
 [NOTE]
-If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone address book states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone address book states to restore.
+The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case.
+If so, it will return an error to the user rather than attempting to perform the redo.
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`.
+Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`.
+Thus, the `addressBookStateList` remains unchanged.
 
 image::UndoRedoState4.png[]
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/David ...` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`.
+Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged.
+We designed it this way because it no longer makes sense to redo the `add n/David ...` command.
+This is the behavior that most modern desktop applications follow.
 
 image::UndoRedoState5.png[]
 
@@ -229,10 +250,12 @@ image::CommitActivityDiagram.png[]
 
 * **Alternative 1 (current choice):** Use a list to store the history of address book states.
 ** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `VersionedAddressBook`.
+** Cons: Logic is duplicated twice.
+For example, when a new command is executed, we must remember to update both `HistoryManager` and `VersionedAddressBook`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: We do not need to maintain a separate list, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
+** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands.
+Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
 // tag::dataencryption[]
@@ -244,7 +267,8 @@ _{Explain here how the data encryption feature will be implemented}_
 
 === Logging
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+We are using `java.util.logging` package for logging.
+The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
 * The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
 * The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
@@ -277,89 +301,360 @@ Refer to the guide <<DevOps#, here>>.
 [appendix]
 == Product Scope
 
-*Target user profile*:
+* Bargain hunter that has accumulated many coupons
+* Likes to use desktop applications
+* Would rather type a command than click a button
+* Fast typist
+* Enjoys using command-line interface
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
-
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition:** Manage coupons faster than a typical mouse/GUI driven app
 
 [appendix]
 == User Stories
 
-Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
+Priorities: epic++ (must have) - * * * *, rare++ (nice to have) - * * * , comon (unlikely to have) - * *, rabak (will negatively affect the application) - *
 
+.User stories and their priorities
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
-|=======================================================================
-|Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* * *` |user |add a new person |
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
-
-_{More to be added}_
+|====================================================================================================================================================================
+|Priority |As a ... |I want to ... |so that I can ...
+|* * * * |forgetful student |keep track of all the _promo codes_/coupons that I collected |use them at their respective shops
+|* * * * |_SoC_ student |quickly input the coupons that I collected from welfare packs |have a digital record of all the vouchers I have
+|* * * * |user |get a list of all the vouchers/_promo codes_ that are expiring soon |make use of them before they expire
+|* * * * |user |track how many times I can use the _promo codes_/coupons |use them multiple times if possible
+|* * * * |user |track how much I have saved from using these _promo codes_/coupons |know how much I save
+|* * * * |thrifty student with student loan |discover and apply discount codes/coupons |maximise my savings
+|* * * * |highly competent _SoC_ student |showcase how easy it is to use command-line |execute simple tasks like add, sorting and finding a coupon
+|* * * * |organized student |have a easy visualisation representation of all my coupons |
+|* * * * |store owner |able to search for coupons by store |customers do not waste too much time finding their coupons
+|* * * * |conscientious couponer |want to be reminded of the soon-to-be expire coupon |use it before it expires
+|* * * |command-line enthusiast |make use of my fast typing speed to organise my coupons in seconds |spend the rest of my time drinking over a lack of friends
+|* * * |canteen stall owner |promote my store by giving out coupons and vouchers |students can benefit from my amazing culinary skills
+|* * * |business owner |let potential consumers discover my discount codes/coupons |advertise and market my products/services
+|* * * |user |track how much I have spent from using these _promo codes_/coupons |
+|* * * |financial-aid _SoC_ student |quickly store the _promo code_ shared by my peers and use them later for critical necessity like KBBQ and escape room |
+|* * * |exchange student attached to _SoC_ |keep track of the good deals in Singapore and visit them |
+|* * * |time-conscious student |using command line to access my coupons |save time
+|* * * |lazy student |easy input of coupon details |
+|* * * |influencer |import my friend's coupons |
+|* * * |forgetful user |search prediction |
+|* * * |digital nomad |share coupons easily with friends while I'm on the go |
+|* * |consumer |check if the store has any ongoing discount/promotions before making payment |save some money from it
+|* * |bargain hunter |know which coupon requires group purchase |quickly share it to my peers
+|* * |_SoC_ lecturer |share my wealth of coupons with students |students will think I am cool and hip instead of another boring lecturer
+|* * |exchange student |find the best food and attractions in Singapore easily |make good use of my time here
+|* * |block head |share coupons to all my hall members |
+|* * |mobile phone user |email the coupon details to myself |easily access them when I’m outside
+|* |_SoC_ cleaner |make use of the rubbish that students always leave behind after orientation camps |make use of necessary services like Korean BBQ and escape rooms
+|* |mother of 5 _SoC_ students |always looking out for the best and hottest deals in town |finance my childrens’ education
+|* |computing student |data saved by the app to be easily parsable |create alternative clients
+|* |infosec student |coupon data to be encrypted |hackers cannot hack my coupons
+|====================================================================================================================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+This is a list of Use-Cases for STASH, a coupon stash application.
+Primary actor is the user.
 
-[discrete]
-=== Use case: Delete person
+.Use Cases Overview for STASH
+image::usecase.png[Use Case Diagram,500,200]
 
-*MSS*
+=== **Use Case: UC1 -  Add Coupon**
+**Actor**: `user`
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+This use case describes how a user uses STASH to add a new coupon entry.
+
+**MSS**
+
+. User keys in command to add a coupon entry.
+. STASH informs the user that the entry is added.
 +
 Use case ends.
 
-*Extensions*
+**Extensions**
 
 [none]
-* 2a. The list is empty.
+* 1a. STASH detects an error in the entered data.
+[none]
+** 1a1. STASH requests the user to enter the details with the correct format.
+** 1a2. User enters new data.
+** Steps 1a1 - 1a2 are repeated until the data entered are correct.
+** Use case resumes from step 2.
+
+=== **Use Case: UC2 - Listing all the coupon entries**
+**Actor**: `user`
+
+This use case describes how a user uses STASH to list out all the coupon entries.
+
+**MSS**
+
+. User keys in command to add a coupon entry.
+. STASH lists out all coupons.
 +
 Use case ends.
 
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
+**Extensions**
 
-_{More to be added}_
+[none]
+* 1a. STASH detects an error in the entered data.
+[none]
+** 1a1. STASH requests the user to enter the details with the correct format.
+** 1a2. User enters new data.
+** Steps 1a1 - 1a2 are repeated until the data entered are correct.
+** Use case resumes from step 2.
+
+[none]
+* 1b. STASH detects that the data list is empty.
+[none]
+** 1b1. STASH informs the user that the list is empty.
+** Use case ends
+
+
+=== **_Use Case: UC3 - Mark a coupon as used_**
+**Actor**: `user`
+
+This use case describes how a user uses STASH to mark a coupon entry as used.
+
+**MSS**
+
+. User keys in command to mark a coupon as used.
+. STASH marks the coupon as used.
++
+Use case ends.
+
+**Extensions**
+
+[none]
+* 1a. STASH detects an error in the entered data.
+[none]
+** 1a1. STASH requests the user to enter the details with the correct format.
+** 1a2. User enters new data.
+** Steps 1a1 - 1a2 are repeated until the data entered are correct.
+** Use case resumes from step 2.
+
+[none]
+* 1b. STASH detects that the specified coupon does not exist.
+[none]
+** 1b1. STASH requests the user to enter an index that corresponds with an existing coupon.
+** 1b2. User enters new index.
+** Use case resumes from step 2.
+
+=== **_Use Case: UC4 - Find coupon(s) by keyword(s)_**
+**Actor**: `user`
+
+This use case describes how a user uses STASH to find the coupon(s) with keyword(s).
+
+**MSS**
+
+. User keys in command to find a coupon based on keyword(s).
+. Matched coupons are displayed to the user.
++
+Use case ends.
+
+**Extensions**
+
+[none]
+* 1a. STASH detects an error in the entered data.
+[none]
+** 1a1. STASH requests the user to enter the details with the correct format.
+** 1a2. User enters new data.
+** Steps 1a1 - 1a2 are repeated until the data entered are correct.
+** Use case resumes from step 2.
+
+[none]
+* 1b. STASH detects that the specified coupon does not exist.
+[none]
+** 1b1. STASH requests the user to enter an index that corresponds with an existing coupon.
+** 1b2. User enters new index.
+** Use case resumes from step 2.
+
+=== **Use Case: UC5 - Edit coupon's details**
+**Actor**: `user`
+
+This use case describes how a user uses STASH to edit details of an existing coupon.
+
+**MSS**
+
+. User keys in command to edit an existing coupon.
+. A confirmation pop will be displayed to the user to confirm its decision.
+. Once confirmed, the coupon’s details are changed to follow the users input.
+. STASH informs the user that the coupon’s details have been changed.
++
+Use case ends.
+
+**Extensions**
+
+[none]
+* 1a. STASH detects an error in the entered data.
+[none]
+** 1a1. STASH requests the user to enter the details with the correct format.
+** 1a2. User enters new data.
+** Steps 1a1 - 1a2 are repeated until the data entered are correct.
+** Use case resumes from step 2.
+
+[none]
+* 1b. STASH detects that the specified coupon does not exist.
+[none]
+** 1b1. STASH requests the user to enter an index that corresponds with an existing coupon.
+** 1b2. User enters new index.
+** Use case resumes from step 2.
+
+[none]
+* 2a. User cancels the confirmation pop up
+[none]
+** 2a1. STASH verifies that user has cancelled during confirmation
+** Use case ends.
+
+=== **Use Case: UC6 - Set reminder**
+**Actor**: `user`
+
+This use case describes how a user uses STASH to set reminders for an existing coupon.
+
+**MSS**
+
+. User keys in command to set reminders for an existing coupon.
+. On the day of the input date, a pop up will appear and remind the user about the coupon and its details.
++
+Use case ends.
+
+
+**Extensions**
+
+[none]
+* 1a. STASH detects an error in the entered data.
+[none]
+** 1a1. STASH requests the user to enter the details with the correct format.
+** 1a2. User enters new data.
+** Steps 1a1 - 1a2 are repeated until the data entered are correct.
+** Use case resumes from step 2.
+
+[none]
+* 1b. STASH detects that the specified coupon does not exist.
+[none]
+** 1b1. STASH requests the user to enter an index that corresponds with an existing coupon.
+** 1b2. User enters new index.
+** Use case resumes from step 2.
+
+=== **Use Case: UC7 - List coupon(s) expiring before date**
+**Actor**: `user`
+
+This use case describes how a user uses STASH to find the coupon(s) expiring before the input expiry date.
+
+**MSS**
+
+. User keys in command to find a coupon based on expiry date.
+. Matched coupons are displayed for the user.
++
+Use case ends.
+
+**Extensions**
+
+[none]
+* 1a. STASH detects an error in the entered data.
+[none]
+** 1a1. STASH requests the user to enter the details with the correct format.
+** 1a2. User enters new data.
+** Steps 1a1 - 1a2 are repeated until the data entered are correct.
+** Use case resumes from step 2.
+
+[none]
+* 1b. STASH detects that the specified coupon does not exist.
+[none]
+** 1b1. STASH requests the user to enter an index that corresponds with an existing coupon.
+** 1b2. User enters new index.
+** Use case resumes from step 2.
+
+=== **Use Case: UC8 - Delete coupon**
+**Actor**: `user`
+
+This use case describes how a user uses STASH to delete an existing coupon.
+
+**MSS**
+
+. User lists all the coupons (UC2) or Find coupon(s) by keywords(s) (UC4) or lists coupons before the expiry date (UC7).
+. User keys in command to delete an existing coupon.
+. A confirmation pop will be displayed to the user to confirm its decision.
+. STASH informs the user that the coupon has been removed.
++
+Use case ends.
+
+=== **Use Case: UC9 - Undo previous command**
+**Actor**: `user`
+
+This use case describes how a user undo the previous command in STASH.
+
+**MSS**
+
+. User keys in command to undo a previous command.
+. A confirmation pop will be displayed to the user to confirm its decision.
+. Once confirmed, STASH will undo the previous command and inform the user that undo operation is successful.
++
+Use case ends.
+
+**Extensions**
+
+[none]
+* 1a. STASH detects an error in the entered data.
+[none]
+** 1a1. STASH requests the user to enter the details with the correct format.
+** 1a2. User enters new data.
+** Steps 1a1 - 1a2 are repeated until the data entered are correct.
+** Use case resumes from step 2.
+
+[none]
+* 1b. STASH detects that the specified coupon does not exist.
+[none]
+** 1b1. STASH requests the user to enter an index that corresponds with an existing coupon.
+** 1b2. User enters new index.
+** Use case resumes from step 2.
+
+[none]
+* 2a. User cancels the confirmation pop up
+[none]
+** 2a1. STASH verifies that user has cancelled during confirmation
+** Use case ends.
 
 [appendix]
-== Non Functional Requirements
+== Non-Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `11` or above installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+. Coupon Stash works on `_common operating systems
+(OS)_` that have `_Java 11_` or above installed.
 
-_{More to be added}_
+. Coupon Stash can hold at least 500 coupons comfortably, and still operate without noticeable lag when entering commands or interacting with the UI.
+. Coupon Stash caters to users who have above average typing speed, and these users should be able to get tasks completed faster in the application by typing, rather than using the mouse and the UI.
+. Coupon Stash source code should be covered by tests as much as possible.
+. Stash should be easy to use for users, who are not familiar with coding.
+. All monetary amounts should be accurate up to 2 decimal places.
+. Coupon Stash should be portable.
+. Data files should remain unchanged when moving from OS to OS.
+. Coupon Stash works perfectly without access to the internet.
+. Coupon Stash supports various types of coupons (e.g. promotional codes, QR code, or barcode) (coming in in v2.0)
 
 [appendix]
 == Glossary
 
-[[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+Terms that are italicised inline code (e.g `_operating system_`) can be found with definitions here.
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+. **Apple** - American technology company well known for lifestyle devices like iPhone and iPad, which are manufactured exclusively by exploited minimum wage workers in China and Taiwan.
+. **coding** - the process of writing code that represents a computer program, or using a programming language to get a computer to behave how you want it to.
+. **Coupon Stash** - the program that makes handling your coupons easier, and also the subject matter of this Developer Guide.
+. **common operating system** - refers to the most widely seen `_operating systems_` within the top 3 most common `_desktop_` `_operating system families_`, namely `_Microsoft Windows_`, `_Apple_` Mac OS X and `_GNU Project_` Linux as of February 2020 (and within these families, Windows 10, macOS Catalina, no data for Linux).
+. **desktop** - a computer meant for use at an ordinary desk, usually one with a screen, as well as devices that allow people to interact with the computing system with physical controls such as a moveable hand-held device typically with large buttons and a wheel called a mouse, as well as a panel of buttons with printed alphanumeric characters known as a keyboard.
+. **GNU Project** - a label used for certain open-source software applications that are developed completely without expectation of remuneration, the acronym GNU in this case does not refer to any significant terms and can instead be taken just as a distinctive name.
+. **Java 11** - the 11th version of the highly popular Java platform and programming language, on which many software applications are built upon.
+. **lag** - the phenomenon where some arbitrary user input takes a noticeable and vexatious amount of time to effect a change in the application state.
+. **Microsoft** - American technology company well known for the Windows operating system, as well as the highly popular productivity software collection `_Microsoft_` Office, amongst various other products which comprise mostly of competing offerings to more well-established products, that fail to gain as much market share as the precedent.
+. **monetary amounts** - any currency amount (for example, 10.55 may represent 10 dollars and 55 cents, or 10 pounds and 55 pence, or 10 pesos and 55 centavos).
+. **operating system** - a fundamental software application that runs on a computer, supporting basic functions such as ability to manage computer memory, to allow users to use the device without concern for such technical details.
+. **operating system family** - a group of `_operating systems_` that are developed by the same company or organisation, usually with the same branding as each other, having visually similar UIs and behaviour.
+. **OS (Operating System)** - see operating system.
+. **promo code** - short for promotional code, usually refer to an unique string of letters and numbers that can be entered in some mobile application to redeem certain benefits.
+. **SoC (School of Computing)** - the School of Computing at the National University of Singapore.
+. **source code** - a set of instructions, written in a programming language that determine the final application’s internal and external behaviour.
+. **Stash** - a group of something valuable that the user would like to keep securely, ideally using our `_Coupon Stash_` application.
+. **UI (User Interface)** - a catch-all term referring to how a computer system and a person interacts, usually referring to specific elements displayed on the computer screen that the user may interact with such as buttons or text boxes, as well as areas where the computer application displays certain outputs to the user.
+=======
 
 [appendix]
 == Product Survey
@@ -393,13 +688,11 @@ These instructions only provide a starting point for testers to work on; testers
 .. Download the jar file and copy into an empty folder
 .. Double-click the jar file +
    Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
-
 . Saving window preferences
 
 .. Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
-
 _{ more test cases ... }_
 
 === Deleting a person
@@ -408,9 +701,13 @@ _{ more test cases ... }_
 
 .. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First contact is deleted from the list.
+Details of the deleted contact shown in the status message.
+Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   Expected: No person is deleted.
+Error details shown in the status message.
+Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
@@ -421,5 +718,4 @@ _{ more test cases ... }_
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
 _{ more test cases ... }_
