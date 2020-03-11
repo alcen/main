@@ -8,7 +8,6 @@ import csdev.couponstash.model.coupon.Coupon;
 
 import csdev.couponstash.model.coupon.savings.PureMonetarySavings;
 import csdev.couponstash.model.coupon.savings.Saveable;
-import csdev.couponstash.model.coupon.savings.SavingsConverter;
 
 import javafx.collections.ObservableList;
 
